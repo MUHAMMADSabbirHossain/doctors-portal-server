@@ -40,8 +40,8 @@ async function run() {
             const cursor = servicesCollection.find(query);
             const services = await cursor.toArray();
             res.send(services);
-            console.log(services);
-        })
+            // console.log(services);
+        });
 
 
     } finally {
