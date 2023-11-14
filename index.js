@@ -61,6 +61,21 @@ async function run() {
             // console.log(services);
         });
 
+        app.get("/user", verifyJWT, async (req, res) => {
+            const users = await userCollection.find().toArray();
+            res.send(users);
+        });
+
+        app.put("/user/admin/:email", verifyJWT, async (req, res) => {
+            const email = req.params.email;
+            const filter = { email: email };
+            const updateDoc = {
+                $set: { role: "admin" },
+            }
+            const result = await userCollection.updateOne(filter, updateDoc);
+            res.send(result);
+        });
+
         app.put("/user/:email", async (req, res) => {
             const email = req.params.email;
             const user = req.body;
